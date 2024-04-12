@@ -1,4 +1,5 @@
 import random
+from typing import *
 
 # verified -> merge_sort(v, 0, len(v) - 1)
 def merge_sort(v, start, end):
