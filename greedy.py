@@ -1,9 +1,11 @@
 from typing import *
 from numbers import Number
+import heapq
+import collections
 
 
 # Tested
-def max_sum_substring(arr: List[Number]) -> Number:
+def max_sum_substring(arr: List[int]) -> int:
 	sum = 0
 	for elem in arr:
 		if elem > 0:
@@ -15,7 +17,7 @@ def max_sum_substring(arr: List[Number]) -> Number:
 
 
 # Tested
-def shows(intervals: List[Tuple[Number, Number]]) -> List[Tuple[Number, Number]]:
+def shows(intervals: List[Tuple[int, int]]) -> List[Tuple[int, int]]:
 	# Sort the intervals by the end time
 	intervals.sort(key = lambda x: x[1])
 
@@ -30,7 +32,7 @@ def shows(intervals: List[Tuple[Number, Number]]) -> List[Tuple[Number, Number]]
 
 
 # Tested
-def florist(num_persons: int, costs: List[Number]) -> Number:
+def florist(num_persons: int, costs: List[int]) -> int:
 	# Sorted in decreasing order of cost
 	sorted_costs = sorted(costs, reverse = True)
 	total = 0
@@ -52,7 +54,7 @@ def plank_nails(planks: List[Tuple[Number, Number]]) -> List[Number]:
 	planks.sort(key = lambda x: x[1])
 	last = float('-inf')
 
-	def point_in_interval(point: Number, interval: Tuple[Number, Number]) -> bool:
+	def point_in_interval(point: int, interval: Tuple[int, int]) -> bool:
 		return interval[0] <= point <= interval[1]
 
 	for plank in planks:
@@ -62,8 +64,67 @@ def plank_nails(planks: List[Tuple[Number, Number]]) -> List[Number]:
 	return nails
 
 
-def backpack(capacity: Number, items: List[Tuple[Number, Number]]) -> Number:
-	pass	
+# Tested
+def backpack(capacity: int, items: List[Tuple[int, int]]) -> int:
+	# An item is a pair (value, weight)
+	# Sort the items by the value per weight
+	items.sort(key = lambda x: x[0] / x[1], reverse = True)
+
+	total = 0
+	for item in items:
+		if capacity >= item[1]:
+			total += item[0]
+			capacity -= item[1]
+		else:
+			total += item[0] * (capacity / item[1])
+			break
+	return total
+
+
+# Tested
+def distances_between_cities(car_capacity: int, num_gas_stations: int, distances: List[Number]) -> Number:
+	# Return the minimum number of stops to reach the destination
+	# from the source
+	stops = 0
+	curr_capacity = car_capacity
+	for i in range(num_gas_stations):
+		if distances[i] > curr_capacity:
+			if i == 0 or distances[i] - distances[i - 1] > car_capacity:
+				return -1
+
+			curr_capacity = distances[i - 1] + car_capacity
+			stops += 1
+	return stops
+
+
+# Tested
+def homewors_ACS(homeworks: List[Tuple[int, int]]) -> List[int]:
+	# A homework is a pair (deadline, score)
+	# Sort the homeworks by the deadline in decreasing order
+	sorted_homeworks = sorted(homeworks, key = lambda x: x[0], reverse = True)
+	heap = []
+	total = 0
+	i = 0
+	max_ddl = sorted_homeworks[0][0]
+
+	for ddl in range(max_ddl, 0, -1):
+		# Add the homeworks with the same deadline
+		while i < len(sorted_homeworks) and sorted_homeworks[i][0] == ddl:
+			heapq.heappush(heap, -sorted_homeworks[i][1])
+			i += 1
+
+		# Choose the homework with the maximum score
+		if heap:
+			total -= heapq.heappop(heap)
+	return total
+
+
+def test():
+	pass
+
+
+def main():
+	test()
 
 
 if __name__ == "__main__":
