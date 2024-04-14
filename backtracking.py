@@ -1,29 +1,45 @@
 from typing import *
 from numbers import Number
 
+
+"""
+	# general algorithm for backtracking
+	def backtrack(domain, partial_solution):
+		if partial_solution is complete:
+			solutions.append(partial_solution)
+			return
+		
+		for candidate in domain:
+			if candidate is valid:
+				partial_solution.append(candidate)
+				backtrack(domain, partial_solution)
+				partial_solution.pop()
+
+"""
+
 # tested
 def permutations(n: int) -> List[List[int]]:
-    solutions = []
+	solutions = []
 
-    def backtracking(current_permutation: List[int]):
-        if len(current_permutation) == n:
-            solutions.append(current_permutation.copy())  # Append a copy of the list
-            return
+	def backtracking(current_permutation: List[int]):
+		if len(current_permutation) == n:
+			solutions.append(current_permutation.copy())  # Append a copy of the list
+			return
 
-        for i in range(1, n+1):
-            if i not in current_permutation:
-                current_permutation.append(i)
-                backtracking(current_permutation)
-                current_permutation.pop()
+		for i in range(1, n+1):
+			if i not in current_permutation:
+				current_permutation.append(i)
+				backtracking(current_permutation)
+				current_permutation.pop()
 
-    backtracking([])
-    return solutions
+	backtracking([])
+	return solutions
 	
 
 # tested
 def combinations(n : int, k : int) -> List[List[int]]:
 	solutions = []
-      
+	  
 	def backtracking(current_combination: List[int], start: int):
 		if len(current_combination) == k:
 			solutions.append(current_combination.copy())
@@ -36,31 +52,31 @@ def combinations(n : int, k : int) -> List[List[int]]:
 
 	backtracking([], 1)
 	return solutions
-    
+	
 from typing import List
 
 
 # tested
 def arrangements(n: int, k: int) -> List[List[int]]:
-    solutions = []
-    used = [False] * (n + 1)  # Tracking usage of elements
-    
-    def backtracking(current_arrangement: List[int]):
-        if len(current_arrangement) == k:
-            solutions.append(current_arrangement.copy())
-            return
-        
-        for i in range(1, n+1):
-            if not used[i]:
-                current_arrangement.append(i)
-                # Mark the element as used
-                used[i] = True
-                backtracking(current_arrangement)
-                used[i] = False
-                current_arrangement.pop()
+	solutions = []
+	used = [False] * (n + 1)  # Tracking usage of elements
+	
+	def backtracking(current_arrangement: List[int]):
+		if len(current_arrangement) == k:
+			solutions.append(current_arrangement.copy())
+			return
+		
+		for i in range(1, n+1):
+			if not used[i]:
+				current_arrangement.append(i)
+				# Mark the element as used
+				used[i] = True
+				backtracking(current_arrangement)
+				used[i] = False
+				current_arrangement.pop()
 
-    backtracking([])
-    return solutions
+	backtracking([])
+	return solutions
 
 def subsets(nums: List[int]) -> List[List[int]]:
 	solutions = []
@@ -80,7 +96,7 @@ def subsets(nums: List[int]) -> List[List[int]]:
 # to be tested
 def n_queens(n : int) -> List[Dict[int, int]]:
 	solutions = []
-    
+	
 	# row -> the row we are currently placing a queen in
 	# columns -> the columns that are already occupied
 	# diagonal1 -> the diagonals that are already occupied
@@ -90,7 +106,7 @@ def n_queens(n : int) -> List[Dict[int, int]]:
 		if row == n:
 			solutions.append(current_solution.copy())
 			return
-            
+			
 		for col in range(n):
 			diag = row - col
 			diag2 = row + col
@@ -106,24 +122,8 @@ def n_queens(n : int) -> List[Dict[int, int]]:
 				diagonal2.remove(diag2)
 				del current_solution[row] # Remove the queen from the current row
 		
-		backtracking(0, set(), set(), set(), {})
-		return solutions
+	backtracking(0, set(), set(), set(), {})
+	return solutions
 
-      
+print(n_queens(4))
 
-
-
-"""
-	# general algorithm for backtracking
-    def backtrack(domain, partial_solution):
-		if partial_solution is complete:
-			solutions.append(partial_solution)
-			return
-		
-		for candidate in domain:
-			if candidate is valid:
-				partial_solution.append(candidate)
-				backtrack(domain, partial_solution)
-				partial_solution.pop()
-
-"""
