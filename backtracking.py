@@ -55,7 +55,6 @@ def combinations(n : int, k : int) -> List[List[int]]:
 	
 from typing import List
 
-
 # tested
 def arrangements(n: int, k: int) -> List[List[int]]:
 	solutions = []
@@ -78,6 +77,7 @@ def arrangements(n: int, k: int) -> List[List[int]]:
 	backtracking([])
 	return solutions
 
+# tested
 def subsets(nums: List[int]) -> List[List[int]]:
 	solutions = []
 	
