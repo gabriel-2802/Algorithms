@@ -1,4 +1,4 @@
-pa-lab
+pa-lab/
 <<<<<<< HEAD
 testing.py
 graphs.py
@@ -9,5 +9,5 @@ testing.py
 .vscode
 __pycache__
 >>>>>>> 218daa964b866b2a0abc7271d32d4d49f2c70242
-.vscode
-__pycache__
+.vscode/
+__pycache__/
