@@ -1,5 +1,19 @@
 from typing import List
 
+#tested
+def make_undirected(graph: List[List[int]]) -> List[List[int]]:
+    n = len(graph) 
+    undirected_graph = [[] for _ in range(n)]
+
+    for node in range(n):
+        for neighbor in graph[node]:
+            if neighbor not in undirected_graph[node]:
+                undirected_graph[node].append(neighbor)
+            if node not in undirected_graph[neighbor]:
+                undirected_graph[neighbor].append(node)
+
+    return undirected_graph
+
 # tested
 def complement_graph(graph: List[List[int]]) -> List[List[int]]:
     # create the empty complement graph
