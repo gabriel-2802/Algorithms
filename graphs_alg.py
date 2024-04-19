@@ -54,11 +54,3 @@ def scc_kosaraju(graph: List[List[int]]) -> List[List[int]]:
 
     return scc
 
-
-
-            
-
-
-
-
-    

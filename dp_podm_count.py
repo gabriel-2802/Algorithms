@@ -5,12 +5,8 @@ from numbers import Number
 import heapq
 import collections
 
-def test():
-	pass
-
-
 def main():
-	test()
+	pass
 
 
 if __name__ == "__main__":
