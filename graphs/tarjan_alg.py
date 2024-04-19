@@ -1,7 +1,7 @@
 from typing import List
 from typing import Set
 from typing import Tuple
-from graphs_alg import scc_kosaraju
+from graphs.graphs_alg import scc_kosaraju
 
 
 # tested
@@ -23,7 +23,7 @@ def scc_tarjan(graph: List[List[int]]) -> List[List[int]]:
     def dfs(node):
         nonlocal timestamp
         timestamp += 1
-        discover_t[node] = low[node] = timestamp
+        discover_t[node] = low[node] = timestamp # convention for low
 
         stackNodes.append(node)
         onStack.add(node)
