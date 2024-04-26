@@ -61,7 +61,7 @@ def dijkstra(graph: List[List[Tuple]], source: int) -> List[List[int]]:
 # tested
 # returns the distance vector and the parent vector for all nodes from source
 # throws an error if the graph contains a negative cycle
-def bellman_ford(graph: List[List[Tuple]], source: int) -> List[List[int]]:
+def bellman_ford(graph: List[List[Tuple]], source: int) -> Tuple[bool, List[List[int]]]:
 	n = len(graph)
 
 	# initialize
@@ -75,7 +75,7 @@ def bellman_ford(graph: List[List[Tuple]], source: int) -> List[List[int]]:
 	# Relax the edges n-1 times
 	for _ in range(n - 1):
 		# for all edges (u, v) with weight w we relax the edge
-		for node in range(1,n):
+		for node in range(1, n):
 			for neighbor, weight in graph[node]:
 				# check is relaxing the edge will give a shorter path
 				if distance[node] + weight < distance[neighbor]:
@@ -86,9 +86,13 @@ def bellman_ford(graph: List[List[Tuple]], source: int) -> List[List[int]]:
 	for node in range(1, n):
 		for neighbor, weight in graph[node]:
 			if distance[node] + weight < distance[neighbor]:
-				ValueError("Graph contains a negative cycle")
+				return [True, [distance, parent]]
+	
+	for i in range(1, n):
+		if distance[i] == MAX:
+			distance[i] = -1
 
-	return [distance, parent]
+	return [False, [distance, parent]]
 
 # tested
 # returns the distance vector and the parent vector for all nodes from source
@@ -135,7 +139,7 @@ def bellman_ford_optimised(graph: List[List[Tuple]], source: int) -> List[List[i
 
 	return [distance, parent]
 
-# testted
+# tested
 # no longer detects negative cycles
 # works for graphs with negative weights
 # similar to Dijkstra's algorithm
@@ -174,23 +178,3 @@ def bellman_ford_optimised2(graph: List[List[Tuple]], source: int) -> List[List[
 
 	
 	return [distance, parent]
-
-
-# graph_weights[i][j] == weight of edge (i, j)
-# graph_weights[i][j] == 0 if there is no edge between i and j
-# returns a list with the distance matrix and the parent matrix
-def floyd_warshall(graph_weights: List[List[int]]) -> List[List[List[int]]]:
-	pass
-
-
-# e din lab, nodul 0 e ignorat, dar il folosesti la johnson
-g_w = [
-	[0,0,0,0,0],
-	[0,0,0,-2,0],
-	[0,4,0,3,0],
-	[0,0,0,0,2],
-	[0,0,-1,0,0]
-]
-
-res = floyd_warshall(g_w)
-print(res[0])
