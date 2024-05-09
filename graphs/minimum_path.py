@@ -86,13 +86,13 @@ def bellman_ford(graph: List[List[Tuple]], source: int) -> Tuple[bool, List[List
 	for node in range(1, n):
 		for neighbor, weight in graph[node]:
 			if distance[node] + weight < distance[neighbor]:
-				return [True, [distance, parent]]
+				return (True, [distance, parent])
 	
 	for i in range(1, n):
 		if distance[i] == MAX:
 			distance[i] = -1
 
-	return [False, [distance, parent]]
+	return (False, [distance, parent])
 
 # tested
 # returns the distance vector and the parent vector for all nodes from source

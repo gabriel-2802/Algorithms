@@ -1,4 +1,5 @@
 from typing import List
+from collections import deque
 MAX = 10**9
 
 # tested
@@ -102,3 +103,45 @@ def rebuild_path(parent: List[int], distance: List[int], source: int, destinatio
 
     path.insert(0, source)
     return path
+
+# tested
+def internal_degree(graph: List[List[int]]) -> List[int]:
+    n = len(graph)
+    degree = [0] * n
+
+    for node in range(1, n):
+        for neighbor in graph[node]:
+            degree[neighbor] += 1
+
+    return degree
+
+# tested
+def topological_sort(graph: List[List[int]]) -> List[int]:
+    n = len(graph)
+    visited = [False] * n
+    # queue to store the nodes with 0 internal degree
+    queue = deque()
+
+    # get the internal degree of each node
+    degrees = internal_degree(graph)
+
+    # add the nodes with 0 internal degree to the queue
+    for node in range(1, n):
+        if degrees[node] == 0:
+            queue.append(node)
+
+    topological_order = []
+    while queue:
+        # get the node with 0 internal degree
+        node = queue.popleft()
+        # add it to the topological order
+        topological_order.append(node)
+
+        for neighbor in graph[node]:
+            degrees[neighbor] -= 1
+            if degrees[neighbor] == 0:
+                queue.append(neighbor)
+
+    return topological_order
+
+    
