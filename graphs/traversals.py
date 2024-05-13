@@ -1,26 +1,33 @@
 from collections import deque
+from typing import List
 
-def dfs(graph, visited):
+MAX = 10**9
+# graphs are represented as adjacency lists , node 0 is a valid node
+
+# complexity: O(V+E)
+# visits all nodes in the graph
+# tested
+def dfs_traversal(graph: List[List[int]]):
+    visited = set()
+    def dfs(node):
+        visited.add(node)
+        # start[node] = time++
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                # parent[neighbor] = node
+                dfs(neighbor)
+        #end[node] = time++
+
     for node in range(len(graph)):
         if node not in visited:
-            dfs_from_source(node, graph, visited)
+            dfs(node)
 
-# visited = set()
-def dfs_from_source(node, graph, visited):
-    visited.add(node)
-    # start[node] = time++
-    for neighbor in graph[node]:
-        if neighbor not in visited:
-            # parent[neighbor] = node
-            dfs_from_source(neighbor, graph, visited)
-
-    #end[node] = time++
-    # stack.append(node) for topological sort
-
-
+# complexity: O(V+E)
 # returns the shortest distances from source to all nodes
-def bfs(source, graph):
-    dist = [float('inf')] * len(graph)  # Initialize distances to infinity
+# tested
+def bfs(source: int, graph: List[List[int]]) -> List[int]: 
+    dist = [MAX] * len(graph)
     q = deque()
 
     dist[source] = 0  # Distance to the source itself is 0

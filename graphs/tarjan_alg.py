@@ -3,9 +3,9 @@ from typing import Set
 from typing import Tuple
 from graphs.graphs_alg import scc_kosaraju
 
-
+# complexity: O(V+E)
 # tested
-# used for directed graphs
+# DIRECTED GRAPHS
 # returns a list of strongly connected components as lists of nodes
 def scc_tarjan(graph: List[List[int]]) -> List[List[int]]:
     n = len(graph)
@@ -58,9 +58,10 @@ def scc_tarjan(graph: List[List[int]]) -> List[List[int]]:
 
     return all_scc
 
+# complexity: O(V+E)
 # tested
+# UNDIRECTED GRAPHS
 #returns a set of critical vertexes
-# used for undirected graphs
 def critical_vertices_tarjan(graph: List[List[int]]) -> Set[int]:
     n = len(graph)  # Number of vertices in the graph including the placeholder at index 0
     
@@ -108,9 +109,10 @@ def critical_vertices_tarjan(graph: List[List[int]]) -> Set[int]:
 
     return critical_vertices
 
+# complexity: O(V+E)
 #tested 
-#returns a set of critical edges represented as pairs
-# used for undirected graphs
+# UNDIRECTED GRAPHS
+#returns a set of critical edges represented as pairs (src, dest)
 def critical_edges_tarjan(graph: List[List[int]]) -> Set[Tuple[int, int]]:
     n = len(graph)
 
@@ -150,7 +152,9 @@ def critical_edges_tarjan(graph: List[List[int]]) -> Set[Tuple[int, int]]:
     return critical_edges
 
 
+# complexity: O(V+E)
 #tested
+# UNDIRECTED GRAPHS
 #returns a list of biconnected components represented as sets of nodes
 def biconnected_tarjan(graph: List[List[int]]) -> List[Set[int]]:
     n = len(graph) 
@@ -215,4 +219,3 @@ def biconnected_tarjan(graph: List[List[int]]) -> List[Set[int]]:
                 biconnected_components.append(comp)
 
     return biconnected_components
-    

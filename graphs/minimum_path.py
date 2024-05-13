@@ -4,17 +4,16 @@ from typing import Tuple
 
 MAX = 10**9
 
+# For particular graphs, a more efficient algorithm can be used to find the shortest path between nodes.
+# ex: topological sort for DAGs
+# For general graphs, we can use Dijkstra's algorithm or Bellman-Ford algorithm.
+# Dijkstra's algorithm is more efficient than Bellman-Ford algorithm for graphs with NON-NEGATIVE WEIGHTS.
+# Bellman-Ford algorithm can be used for graphs with negative weights.
+# Bellman-Ford algorithm (original and optimised1) can detect negative cycles in the graph.
+# Bellman-Ford algorithm (optimised2) does not detect negative cycles, however, it is more efficient than the original algorithm (and optimised1).
 
-"""
-	For particular graphs, a more efficient algorithm can be used to find the shortest path between nodes.
-	ex: topological sort for DAGs
-	For general graphs, we can use Dijkstra's algorithm or Bellman-Ford algorithm.
-	Dijkstra's algorithm is more efficient than Bellman-Ford algorithm for graphs with non-negative weights.
-	Bellman-Ford algorithm can be used for graphs with negative weights.
-	Bellman-Ford algorithm (original and optimised1) can detect negative cycles in the graph.
-	Bellman-Ford algorithm (optimised2) does not detect negative cycles, however, it is more efficient than the original algorithm (and optimised1).
-"""
 
+# complexity: O((V+E)logV)
 # tested
 # returns the distance vector and the parent vector
 # graph[i] = [(neighbor, weight)]
@@ -54,14 +53,14 @@ def dijkstra(graph: List[List[Tuple]], source: int) -> List[List[int]]:
 				# since we relaxed the edge, we need to update the min_heap
 				heapq.heappush(min_heap, (distance[neighbor], neighbor))
 
-	# ignore node 0 since its 1 indexed
 	return [distance, parent]
 
 
+# complexity: O(V*E)
 # tested
 # returns the distance vector and the parent vector for all nodes from source
 # throws an error if the graph contains a negative cycle
-def bellman_ford(graph: List[List[Tuple]], source: int) -> Tuple[bool, List[List[int]]]:
+def bellman_ford(graph: List[List[Tuple]], source: int) -> List[List[int]]:
 	n = len(graph)
 
 	# initialize
@@ -86,14 +85,15 @@ def bellman_ford(graph: List[List[Tuple]], source: int) -> Tuple[bool, List[List
 	for node in range(1, n):
 		for neighbor, weight in graph[node]:
 			if distance[node] + weight < distance[neighbor]:
-				return (True, [distance, parent])
+				raise ValueError("Graph contains a negative cycle")
 	
 	for i in range(1, n):
 		if distance[i] == MAX:
 			distance[i] = -1
 
-	return (False, [distance, parent])
+	return [distance, parent]
 
+# complexity: O(V*E) with improvements
 # tested
 # returns the distance vector and the parent vector for all nodes from source
 # throws an error if the graph contains a negative cycle
@@ -135,10 +135,11 @@ def bellman_ford_optimised(graph: List[List[Tuple]], source: int) -> List[List[i
 	for node in range(1, n):
 		for neighbor, weight in graph[node]:
 			if distance[node] + weight < distance[neighbor]:
-				ValueError("Graph contains a negative cycle")
+				raise ValueError("Graph contains a negative cycle")
 
 	return [distance, parent]
 
+# complexity: O(V*E) with improvements
 # tested
 # no longer detects negative cycles
 # works for graphs with negative weights

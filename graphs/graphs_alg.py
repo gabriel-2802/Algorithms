@@ -2,6 +2,7 @@ from typing import List
 from collections import deque
 MAX = 10**9
 
+# complexity: O(V+E)
 # tested
 def convert_directed_to_undirected(graph: List[List[int]]) -> List[List[int]]:
     n = len(graph) 
@@ -17,20 +18,22 @@ def convert_directed_to_undirected(graph: List[List[int]]) -> List[List[int]]:
 
     return undirected_graph
 
+# complexity: O(V+E)
 # tested
 # returns the complement of a graph
-def complement_graph(graph: List[List[int]]) -> List[List[int]]:
+def invert_graph(graph: List[List[int]]) -> List[List[int]]:
     # create the empty complement graph
     n = len(graph)
     complement = [[] for _ in range(n)]
 
     for node in range(1, n):
         for neighbor in graph[node]:
-            # for the edge (u,v) in the original graph, add the edge (u,v) to the complement graph
+            # for the edge (u,v) in the original graph, add the edge (v,u) to the complement graph
             complement[neighbor].append(node)
     return complement
 
 
+# complexity: O(V+E)
 # tested
 # finds all strongly connected components
 # used for directed graphs
@@ -58,8 +61,8 @@ def scc_kosaraju(graph: List[List[int]]) -> List[List[int]]:
         if not visited[i]:
             dfs(i)
 
-    # Get the transpose of the graph
-    transposed_graph = complement_graph(graph)
+    # Get the inverse of the graph
+    inverse_graph = invert_graph(graph)
     visited = [False] * (n)  # Reset visited for the second pass
 
     def dfs2(node, cur_scc):
@@ -68,7 +71,7 @@ def scc_kosaraju(graph: List[List[int]]) -> List[List[int]]:
         cur_scc.append(node)
 
         # proceed the dfs
-        for neighbor in transposed_graph[node]:
+        for neighbor in inverse_graph[node]:
             if not visited[neighbor]:
                 dfs2(neighbor, cur_scc)
 
@@ -84,6 +87,7 @@ def scc_kosaraju(graph: List[List[int]]) -> List[List[int]]:
 
     return scc
 
+# complexity: O(V)
 # tested
 # returns the shortest path from source to destination
 # use a linked list to store the path to avoid reversing the path
@@ -104,6 +108,7 @@ def rebuild_path(parent: List[int], distance: List[int], source: int, destinatio
     path.insert(0, source)
     return path
 
+# complexity: O(V+E)
 # tested
 def internal_degree(graph: List[List[int]]) -> List[int]:
     n = len(graph)
@@ -115,6 +120,7 @@ def internal_degree(graph: List[List[int]]) -> List[int]:
 
     return degree
 
+# complexity: O(V+E)
 # tested
 def topological_sort(graph: List[List[int]]) -> List[int]:
     n = len(graph)
@@ -143,5 +149,27 @@ def topological_sort(graph: List[List[int]]) -> List[int]:
                 queue.append(neighbor)
 
     return topological_order
+
+# complexity: O(V+E)
+# tested
+# tested
+def topological_sort_dfs(graph: List[List[int]]) -> List[int]:
+    n = len(graph)
+    visited = [False] * n
+    # list to store the topological order (use linked list to avoid reversing the order)
+    topo = []
+
+    def dfs(node):
+        visited[node] = True
+        for neighbor in graph[node]:
+            if not visited[neighbor]:
+                dfs(neighbor)
+        topo.append(node)
+
+    for node in range(1, n):
+        if not visited[node]:
+            dfs(node)
+
+    return topo[::-1]  # reverse the order to get the topological order
 
     
