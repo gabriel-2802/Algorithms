@@ -93,7 +93,7 @@ def subsets(nums: List[int]) -> List[List[int]]:
 	return solutions
 
 
-# to be tested
+# tested
 def n_queens(n : int) -> List[Dict[int, int]]:
 	solutions = []
 	
@@ -116,7 +116,9 @@ def n_queens(n : int) -> List[Dict[int, int]]:
 				columns.add(col)
 				diagonal1.add(diag)
 				diagonal2.add(diag2)
+
 				backtracking(row + 1, columns, diagonal1, diagonal2, current_solution)
+	
 				columns.remove(col)
 				diagonal1.remove(diag)
 				diagonal2.remove(diag2)
@@ -125,5 +127,4 @@ def n_queens(n : int) -> List[Dict[int, int]]:
 	backtracking(0, set(), set(), set(), {})
 	return solutions
 
-print(n_queens(4))
 
