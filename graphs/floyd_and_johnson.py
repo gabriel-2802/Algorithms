@@ -2,7 +2,7 @@ from typing import *
 from numbers import Number
 import heapq
 import collections
-from minimum_path import bellman_ford, dijkstra, MAX
+from graphs.minimum_paths_one_to_many import bellman_ford, dijkstra, MAX
 
 
 INF = 10 ** 20
