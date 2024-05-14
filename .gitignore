@@ -13,3 +13,9 @@ __pycache__
 __pycache__/
 hacker_rank/
 pb/
+*.class
+a.out
+*.txt
+*.in
+*.out
+*.ref
