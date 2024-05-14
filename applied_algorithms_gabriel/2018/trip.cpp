@@ -35,7 +35,7 @@ class Solution {
             weights.resize(n, vector<int>(n));
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
-                    cin >> weights[i][j];
+                    cin >> weights[i][j]; 
                 }
             }
         }
