@@ -35,6 +35,7 @@ def ff_bfs(graph: List[List[int]], source: int, target: int, parent: List[int]) 
 '''
     Complexity: O(V * E * E)
     IT ALTERS THE GRAPH!!!
+    Also known as Edmonds-Karp Algorithm
     @params: graph - Capacity Matrtix of the graph(1 indexed), source - source vertex, target - target vertex
     @return: int - Maximum flow from source to target
 '''
