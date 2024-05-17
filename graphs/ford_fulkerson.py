@@ -32,7 +32,9 @@ def ff_bfs(graph: List[List[int]], source: int, target: int, parent: List[int]) 
 
     return False
 
-'''
+''' 
+    TESTED
+    It calculates the maximum flow in a graph
     Complexity: O(V * E * E)
     IT ALTERS THE GRAPH!!!
     Also known as Edmonds-Karp Algorithm
