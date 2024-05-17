@@ -45,7 +45,9 @@ def roy_floyd(n: int, w: List[List[int]]) -> Tuple[List[List[int]], List[List[in
 			for j in range(n):
 				if dist[i][k] == INF or dist[k][j] == INF:
 					continue
-				dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+				if dist[i][j] > dist[i][k] + dist[k][j]:
+					dist[i][j] = dist[i][k] + dist[k][j]
+					parent[i][j] = parent[k][j]
 
 	# Set 0 to INF distances
 	for i in range(n):
