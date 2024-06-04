@@ -17,8 +17,8 @@ class Node:
   
         # node right of current node 
         self.right = right 
-  
-        # tree direction (0/1) 
+
+        # represents huffman code(0 - left/1 - right) for this node
         self.huff = '' 
   
     def __lt__(self, nxt): 
@@ -34,7 +34,7 @@ def build_huffman_tree(s: str) -> Node:
     for character, frequency in freq.items():
         heapq.heappush(nodes, Node(frequency, character))
 
-
+    # compress the nodes to a single node (root)
     while len(nodes) > 1:
         left = heapq.heappop(nodes)
         right = heapq.heappop(nodes)
@@ -46,9 +46,7 @@ def build_huffman_tree(s: str) -> Node:
         new_node = Node(left.freq + right.freq, left.symbol + right.symbol, left, right)
         heapq.heappush(nodes, new_node)
 
-
     return nodes[0]
-
 
 def encodings(node: Node, huff_code = "", codes = {}) -> Dict[str, str]:
     new_code = huff_code + node.huff
@@ -64,6 +62,7 @@ def encodings(node: Node, huff_code = "", codes = {}) -> Dict[str, str]:
         codes[node.symbol] = new_code
 
     return codes
+
 
 
 
