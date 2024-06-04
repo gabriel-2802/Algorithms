@@ -19,3 +19,4 @@ a.out
 *.in
 *.out
 *.ref
+ignore/
