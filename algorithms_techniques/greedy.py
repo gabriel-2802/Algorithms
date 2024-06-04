@@ -49,10 +49,10 @@ def florist(num_persons: int, costs: List[int]) -> int:
 
 
 # Tested
-def plank_nails(planks: List[Tuple[Number, Number]]) -> List[Number]:
+def plank_nails(planks: List[Tuple[int, int]]) -> List[int]:
 	nails = []
-	planks.sort(key = lambda x: x[1])
-	last = float('-inf')
+	planks.sort(key = lambda x: x[0])
+	last =  - 10**9
 
 	def point_in_interval(point: int, interval: Tuple[int, int]) -> bool:
 		return interval[0] <= point <= interval[1]
@@ -65,7 +65,7 @@ def plank_nails(planks: List[Tuple[Number, Number]]) -> List[Number]:
 
 
 # Tested
-def backpack(capacity: int, items: List[Tuple[int, int]]) -> int:
+def backpack(capacity: int, items: List[Tuple[int, int]]) -> float:
 	# An item is a pair (value, weight)
 	# Sort the items by the value per weight
 	items.sort(key = lambda x: x[0] / x[1], reverse = True)
@@ -82,7 +82,7 @@ def backpack(capacity: int, items: List[Tuple[int, int]]) -> int:
 
 
 # Tested
-def distances_between_cities(car_capacity: int, num_gas_stations: int, distances: List[Number]) -> Number:
+def distances_between_cities(car_capacity: int, num_gas_stations: int, distances: List[int]) -> int:
 	# Return the minimum number of stops to reach the destination
 	# from the source
 	stops = 0
@@ -98,34 +98,23 @@ def distances_between_cities(car_capacity: int, num_gas_stations: int, distances
 
 
 # Tested
-def homewors_ACS(homeworks: List[Tuple[int, int]]) -> List[int]:
-	# A homework is a pair (deadline, score)
-	# Sort the homeworks by the deadline in decreasing order
-	sorted_homeworks = sorted(homeworks, key = lambda x: x[0], reverse = True)
-	heap = []
-	total = 0
-	i = 0
-	max_ddl = sorted_homeworks[0][0]
+def homeworks_ACS(homeworks: List[Tuple[int, int]]) -> int:
+    # A homework is a pair (deadline, score)
+    # Sort the homeworks by the deadline in decreasing order
+    sorted_homeworks = sorted(homeworks, key=lambda x: x[0], reverse=True)
+    heap = []
+    total = 0
+    i = 0
+    max_ddl = sorted_homeworks[0][0]
 
-	for ddl in range(max_ddl, 0, -1):
-		# Add the homeworks with the same deadline
-		while i < len(sorted_homeworks) and sorted_homeworks[i][0] == ddl:
-			heapq.heappush(heap, -sorted_homeworks[i][1])
-			i += 1
+    for ddl in range(max_ddl, 0, -1):
+        # Add the homeworks with the same deadline
+        while i < len(sorted_homeworks) and sorted_homeworks[i][0] == ddl:
+            heapq.heappush(heap, -sorted_homeworks[i][1])
+            i += 1
 
-		# Choose the homework with the maximum score
-		if heap:
-			total -= heapq.heappop(heap)
-	return total
+        # Choose the homework with the maximum score
+        if heap:
+            total -= heapq.heappop(heap)  # Subtracting because we pushed negative scores
 
-
-def test():
-	pass
-
-
-def main():
-	test()
-
-
-if __name__ == "__main__":
-	main()
+    return total
