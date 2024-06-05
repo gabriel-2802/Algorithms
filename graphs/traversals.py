@@ -17,11 +17,12 @@ def dfs_traversal(graph: List[List[int]]):
             if neighbor not in visited:
                 # parent[neighbor] = node
                 dfs(neighbor)
-        #end[node] = time++
+        #end[node] = ++time
 
     for node in range(len(graph)):
         if node not in visited:
             dfs(node)
+
 
 # complexity: O(V+E)
 # returns the shortest distances from source to all nodes
@@ -32,6 +33,7 @@ def bfs(source: int, graph: List[List[int]]) -> List[int]:
 
     dist[source] = 0  # Distance to the source itself is 0
     q.append(source)
+    # start[source] = time++
 
     while q:
         node = q.popleft()

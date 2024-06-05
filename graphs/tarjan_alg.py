@@ -36,7 +36,7 @@ def scc_tarjan(graph: List[List[int]]) -> List[List[int]]:
                 dfs(child)
                 # update low value of the current node to its child low value
                 low[node] = min(low[node], low[child])
-            elif child in onStack:
+            elif child in onStack: # BACK EDGE
                 low[node] = min(low[node], discover_t[child])
 
         # if low value of the current node is equal to its discovery time, then it formed a cycle

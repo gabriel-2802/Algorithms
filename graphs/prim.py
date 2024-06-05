@@ -1,43 +1,37 @@
-# source: https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/
-
+from typing import List, Tuple
 import heapq
 
-def tree(V, E, edges):
-	# Create an adjacency list representation of the graph
-	adj = [[] for _ in range(V)]
-	# Fill the adjacency list with edges and their weights
-	for i in range(E):
-		u, v, wt = edges[i]
-		adj[u].append((v, wt))
-		adj[v].append((u, wt))
-	# Create a priority queue to store edges with their weights
-	pq = []
-	# Create a visited array to keep track of visited vertices
-	visited = [False] * V
-	# Variable to store the result (sum of edge weights)
-	res = 0
-	# Start with vertex 0
-	heapq.heappush(pq, (0, 0))
-	# Perform Prim's algorithm to find the Minimum Spanning Tree
-	while pq:
-		wt, u = heapq.heappop(pq)
-		if visited[u]:
-			continue
-			# Skip if the vertex is already visited
-		res += wt 
-		# Add the edge weight to the result
-		visited[u] = True
-		# Mark the vertex as visited
-		# Explore the adjacent vertices
-		for v, weight in adj[u]:
-			if not visited[v]:
-				heapq.heappush(pq, (weight, v)) 
-				# Add the adjacent edge to the priority queue
-	return res 
-# Return the sum of edge weights of the Minimum Spanning Tree
-if __name__ == "__main__":
-	graph = [[0, 1, 5],
-			[1, 2, 3],
-			[0, 2, 1]]
-	# Function call
-	print(tree(3, 3, graph))
+MAX = 10**9
+
+
+# tested
+def prim_alg(src: int, weights: List[List[Tuple[int, int]]]) -> List[int]:
+    n = len(weights)
+
+    # initialize
+    distance = [MAX] * n
+    inside_tree = [False] * n
+    parent = [-1] * n
+
+    # distance to source is 0 and parent is -1 by convention
+    distance[src] = 0
+    parent[src] = -1
+
+    # heap of pairs (distance, node): key is distance
+    min_heap = []
+    heapq.heappush(min_heap, (0, src))
+
+    while min_heap:
+        _, node = heapq.heappop(min_heap)
+        if inside_tree[node]:
+            continue
+        inside_tree[node] = True
+
+        # try to relax the edges for all neighbors of node
+        for neighbor, weight in weights[node]:
+            if weight < distance[neighbor] and not inside_tree[neighbor]:
+                distance[neighbor] = weight
+                parent[neighbor] = node
+                heapq.heappush(min_heap, (distance[neighbor], neighbor))
+
+    return parent
